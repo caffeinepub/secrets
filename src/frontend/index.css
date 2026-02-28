@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fraunces — display serif */
+@font-face {
+  font-family: "Fraunces";
+  src: url("/assets/fonts/Fraunces.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* General Sans — body */
+@font-face {
+  font-family: "General Sans";
+  src: url("/assets/fonts/GeneralSans.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 0.875rem;
+
+    /* Core dark theme — amber-gold accent on near-black */
+    --background: 0.1 0.005 260;
+    --foreground: 0.94 0.01 75;
+
+    --card: 0.14 0.008 255;
+    --card-foreground: 0.92 0.012 75;
+
+    --popover: 0.16 0.01 255;
+    --popover-foreground: 0.92 0.012 75;
+
+    /* Amber gold primary */
+    --primary: 0.78 0.14 68;
+    --primary-foreground: 0.1 0.005 260;
+
+    --secondary: 0.18 0.01 255;
+    --secondary-foreground: 0.82 0.01 75;
+
+    --muted: 0.17 0.008 255;
+    --muted-foreground: 0.52 0.012 255;
+
+    --accent: 0.78 0.14 68;
+    --accent-foreground: 0.1 0.005 260;
+
+    --destructive: 0.65 0.22 25;
+    --destructive-foreground: 0.98 0 0;
+
+    --border: 0.24 0.01 255;
+    --input: 0.22 0.012 255;
+    --ring: 0.78 0.14 68;
+
+    --chart-1: 0.78 0.14 68;
+    --chart-2: 0.65 0.18 25;
+    --chart-3: 0.7 0.15 200;
+    --chart-4: 0.68 0.16 300;
+    --chart-5: 0.75 0.12 140;
+
+    --sidebar: 0.12 0.006 260;
+    --sidebar-foreground: 0.92 0.012 75;
+    --sidebar-primary: 0.78 0.14 68;
+    --sidebar-primary-foreground: 0.1 0.005 260;
+    --sidebar-accent: 0.18 0.01 255;
+    --sidebar-accent-foreground: 0.82 0.01 75;
+    --sidebar-border: 0.22 0.01 255;
+    --sidebar-ring: 0.78 0.14 68;
+
+    /* Category badge colors */
+    --cat-love: 0.65 0.2 10;
+    --cat-work: 0.65 0.15 250;
+    --cat-family: 0.65 0.15 140;
+    --cat-funny: 0.72 0.16 80;
+    --cat-dark: 0.42 0.08 280;
+    --cat-random: 0.62 0.14 200;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "General Sans", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: oklch(var(--background));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: oklch(var(--border));
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(var(--muted-foreground));
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: "Fraunces", serif;
+  }
+
+  /* Noise grain texture overlay */
+  .bg-noise {
+    position: relative;
+  }
+  .bg-noise::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    border-radius: inherit;
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(135deg, oklch(0.82 0.16 72), oklch(0.92 0.12 55));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .card-glow {
+    box-shadow:
+      0 0 0 1px oklch(var(--border)),
+      0 4px 24px -4px oklch(0.05 0 0 / 0.8),
+      0 1px 4px -1px oklch(0.05 0 0 / 0.5);
+  }
+
+  .card-glow-hover {
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+  }
+  .card-glow-hover:hover {
+    box-shadow:
+      0 0 0 1px oklch(var(--primary) / 0.3),
+      0 8px 32px -4px oklch(0.05 0 0 / 0.9),
+      0 2px 8px -1px oklch(0.05 0 0 / 0.6);
+    transform: translateY(-1px);
+  }
+
+  .reaction-btn {
+    @apply flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm transition-all duration-200;
+    background: oklch(var(--muted));
+    color: oklch(var(--muted-foreground));
+    border: 1px solid transparent;
+  }
+  .reaction-btn:hover {
+    background: oklch(var(--accent) / 0.15);
+    border-color: oklch(var(--accent) / 0.3);
+    color: oklch(var(--accent-foreground));
+    transform: scale(1.05);
+  }
+  .reaction-btn:active {
+    transform: scale(0.97);
+  }
+  .reaction-btn.reacted {
+    background: oklch(var(--accent) / 0.2);
+    border-color: oklch(var(--accent) / 0.4);
+    color: oklch(var(--primary));
+  }
+}
